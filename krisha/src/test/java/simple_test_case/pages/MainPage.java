@@ -58,6 +58,9 @@ public class MainPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='page-title']/h1")
     WebElement pageTitle;
 
+    @FindBy(xpath = "//a[@href='/complex/search/']")
+    WebElement newBuildingsLink;
+
     public void selectRentCategory() {
         categoryDropDownList.click();
         rentCategory.click();
@@ -100,5 +103,10 @@ public class MainPage extends AbstractPage {
     public void checkValidText(String textFromDoc) {
         String textOnPage = pageTitle.getText();
         assertEquals(textOnPage, textFromDoc);
+    }
+
+    public void pressNewBuildingsLink() {
+        new WebDriverWait(driver, 21).until(ExpectedConditions.elementToBeClickable(newBuildingsLink));
+        newBuildingsLink.click();
     }
 }
