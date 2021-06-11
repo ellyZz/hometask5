@@ -1,26 +1,26 @@
-package simple_test_case.tests;
+package kz.krisha.cases;
 
+import kz.krisha.utils.Utils;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
-import simple_test_case.pages.AdPage;
-import simple_test_case.pages.MainPage;
-import simple_test_case.pages.MainPageWithAdditionalFilters;
-import simple_test_case.pages.NewBuildingsPage;
+import kz.krisha.pages.AdPage;
+import kz.krisha.pages.MainPage;
+import kz.krisha.pages.MainPageWithAdditionalFilters;
+import kz.krisha.pages.NewBuildingsPage;
+import org.testng.reporters.jq.Main;
 
 import java.util.concurrent.TimeUnit;
 
+import static kz.krisha.pages.Constants.*;
+
 public class KrishaTests {
     private WebDriver driver;
-    private static final String RENT_MEDEO_SIMPLE_FILTERS_TEXT = "Аренда трехкомнатных квартир от хозяев в Медеуском р-не Алматы";
-    private static final String RENT_MEDEO_ADDITIONAL_FILTERS_TEXT = "Аренда квартир на длительный срок от хозяев в Медеуском р-не Алматы";
-    private static final String MIN_SQUARE = "50";
-    private static final String MAX_PRICE = "300000";
 
     @BeforeMethod
     public void setDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/test/java/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://krisha.kz");
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -35,14 +35,15 @@ public class KrishaTests {
     @Test(groups = "UITest")
     public void verifyPageContentInDefaultState() {
         MainPageWithAdditionalFilters mainPageWithFilters = new MainPageWithAdditionalFilters(driver);
+        MainPage mainPage = new MainPage(driver);
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(mainPageWithFilters.isCategoryDropDownListDisplayed())
+        softAssertions.assertThat(mainPage.isCategoryDropDownListDisplayed())
                 .overridingErrorMessage("CategoryDropDownList is not displayed")
                 .isTrue();
-        softAssertions.assertThat(mainPageWithFilters.isRoomCountDropDownListDisplayed())
+        softAssertions.assertThat(mainPage.isRoomCountDropDownListDisplayed())
                 .overridingErrorMessage("RoomCountDropDownList is not displayed")
                 .isTrue();
-        softAssertions.assertThat(mainPageWithFilters.isSearchButtonDisplayed())
+        softAssertions.assertThat(mainPage.isSearchButtonDisplayed())
                 .overridingErrorMessage("Search button is not displayed")
                 .isTrue();
         softAssertions.assertAll();
@@ -51,23 +52,7 @@ public class KrishaTests {
     @Test(groups = "UITest")
     public void checkCorrectTextInResultOfSearch() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.selectRentCategory();
-        mainPage.selectRegion();
-        mainPage.inputPrice(MAX_PRICE);
-        mainPage.selectHavePhotoCheckBox();
-        mainPage.selectOwnerCheckBox();
-        mainPage.selectAgency();
-        mainPage.selectRoomCount();
-        mainPage.selectRoomCount();
-        mainPage.pressSearchButton();
-        mainPage.checkValidText(RENT_MEDEO_SIMPLE_FILTERS_TEXT);
-    }
-
-    @Test(groups = "UITest")
-    public void checkResultOfSpecialFilters() {
-        MainPageWithAdditionalFilters mainPageWithFilters = new MainPageWithAdditionalFilters(driver);
-        mainPageWithFilters
-                .selectRentCategory()
+        mainPage.selectRentCategory()
                 .selectRegion()
                 .inputPrice(MAX_PRICE)
                 .selectHavePhotoCheckBox()
@@ -76,6 +61,24 @@ public class KrishaTests {
                 .selectRoomCount()
                 .selectRoomCount()
                 .pressSearchButton()
+                .checkValidText(RENT_MEDEO_SIMPLE_FILTERS_TEXT);
+    }
+
+    @Test(groups = "UITest")
+    public void checkResultOfSpecialFilters() {
+        MainPageWithAdditionalFilters mainPageWithFilters = new MainPageWithAdditionalFilters(driver);
+        MainPage mainPage = new MainPage(driver);
+        mainPage.
+                selectRentCategory()
+                .selectRegion()
+                .inputPrice(MAX_PRICE)
+                .selectHavePhotoCheckBox()
+                .selectOwnerCheckBox()
+                .selectAgency()
+                .selectRoomCount()
+                .selectRoomCount()
+                .pressSearchButton();
+        mainPageWithFilters
                 .selectPeriod()
                 .selectNotFirstCheckBox()
                 .inputMinSquare(MIN_SQUARE)
@@ -86,8 +89,9 @@ public class KrishaTests {
     @Test(groups = "UITest")
     public void checkValuesInAd() {
         MainPageWithAdditionalFilters mainPageWithFilters = new MainPageWithAdditionalFilters(driver);
+        MainPage mainPage = new MainPage(driver);
         SoftAssertions softAssertions = new SoftAssertions();
-        mainPageWithFilters
+        mainPage
                 .selectRentCategory()
                 .selectRegion()
                 .inputPrice(MAX_PRICE)
@@ -96,14 +100,17 @@ public class KrishaTests {
                 .selectAgency()
                 .selectRoomCount()
                 .selectRoomCount()
-                .pressSearchButton()
+                .pressSearchButton();
+        mainPageWithFilters
                 .selectPeriod()
                 .selectNotFirstCheckBox()
                 .inputMinSquare(MIN_SQUARE)
                 .clickSearchButton()
                 .clickToFirstAd();
-        AdPage adPage = new AdPage(driver)
-                .switchTab()
+        AdPage adPage = new AdPage(driver);
+        Utils utils = new Utils(driver);
+        utils.switchTab();
+        adPage
                 .pressHideHint();
         softAssertions.assertThat(adPage.checkFloorIsNotFirst())
                 .overridingErrorMessage("Floor is first")
@@ -128,13 +135,15 @@ public class KrishaTests {
     @Test(groups = "UITest")
     public void checkPhotoIsDisplayed() {
         MainPageWithAdditionalFilters mainPageWithAdditionalFilters = new MainPageWithAdditionalFilters(driver);
+        MainPage mainPage = new MainPage(driver);
+        mainPage.selectHavePhotoCheckBox();
         mainPageWithAdditionalFilters
-                .selectHavePhotoCheckBox()
                 .clickSearchButton()
                 .clickToFirstAd();
-        AdPage adPage = new AdPage(driver)
-                .switchTab()
-                .pressHideHint();
+        AdPage adPage = new AdPage(driver);
+        Utils utils = new Utils(driver);
+        utils.switchTab();
+        adPage.pressHideHint();
         adPage.checkAdMainPhotoIsDisplayed();
     }
 }

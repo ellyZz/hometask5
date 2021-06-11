@@ -1,4 +1,4 @@
-package simple_test_case.pages;
+package kz.krisha.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static kz.krisha.pages.Constants.THIRTY;
 import static org.testng.Assert.assertEquals;
 
 public class MainPage extends AbstractPage {
@@ -61,52 +62,72 @@ public class MainPage extends AbstractPage {
     @FindBy(xpath = "//a[@href='/complex/search/']")
     WebElement newBuildingsLink;
 
-    public void selectRentCategory() {
+    public MainPage selectRentCategory() {
         categoryDropDownList.click();
         rentCategory.click();
+        return this;
     }
 
-    public void selectRegion() {
+    public MainPage selectRegion() {
         regionDropDown.click();
-        new WebDriverWait(driver, 21).until(ExpectedConditions.elementToBeClickable(regionAlmaty));
+        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(regionAlmaty));
         regionAlmaty.click();
         medeuskkijRaion.click();
         selectButton.click();
+        return this;
     }
 
-    public void inputPrice(String price) {
+    public MainPage inputPrice(String price) {
         priceTo.sendKeys(price);
+        return this;
     }
 
-    public void selectHavePhotoCheckBox() {
+    public MainPage selectHavePhotoCheckBox() {
         photoCheckbox.click();
+        return this;
     }
 
-    public void selectOwnerCheckBox() {
+    public MainPage selectOwnerCheckBox() {
         fromOwnerCheckBox.click();
+        return this;
     }
 
-    public void selectAgency() {
+    public MainPage selectAgency() {
         fromCheckedAgency.click();
+        return this;
     }
 
-    public void selectRoomCount() {
+    public MainPage selectRoomCount() {
         roomCountDropDownList.click();
-        new WebDriverWait(driver, 21).until(ExpectedConditions.elementToBeClickable(selectThreeRoom));
+        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(selectThreeRoom));
         selectThreeRoom.click();
+        return this;
     }
 
-    public void pressSearchButton() {
+    public MainPage pressSearchButton() {
         searchButton.click();
+        return this;
     }
 
-    public void checkValidText(String textFromDoc) {
+    public MainPage checkValidText(String textFromDoc) {
         String textOnPage = pageTitle.getText();
         assertEquals(textOnPage, textFromDoc);
+        return this;
     }
 
     public void pressNewBuildingsLink() {
-        new WebDriverWait(driver, 21).until(ExpectedConditions.elementToBeClickable(newBuildingsLink));
+        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(newBuildingsLink));
         newBuildingsLink.click();
+    }
+
+    public boolean isCategoryDropDownListDisplayed() {
+        return categoryDropDownList.isDisplayed();
+    }
+
+    public boolean isRoomCountDropDownListDisplayed() {
+        return roomCountDropDownList.isDisplayed();
+    }
+    public boolean isSearchButtonDisplayed() {
+        return searchButton.isDisplayed();
     }
 }

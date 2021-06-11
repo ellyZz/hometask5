@@ -1,8 +1,9 @@
-package simple_test_case.pages;
+package kz.krisha.pages;
 
 import org.openqa.selenium.WebDriver;
 
 public abstract class AbstractPage {
+
     protected WebDriver driver;
 
     protected AbstractPage(WebDriver driver) {

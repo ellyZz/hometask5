@@ -1,6 +1,5 @@
-package simple_test_case.pages;
+package kz.krisha.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
+import static kz.krisha.pages.Constants.*;
 
 public class AdPage extends AbstractPage {
 
@@ -32,34 +31,28 @@ public class AdPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='gallary__main']/img")
     WebElement adMainPhoto;
 
-    public AdPage switchTab() {
-        ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tab.get(1));
-        return this;
-    }
-
     public AdPage pressHideHint() {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(hideHint));
+        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(hideHint));
         hideHint.click();
         return this;
     }
 
     public boolean checkFloorIsNotFirst() {
         String floorNumberText = floorInfo.getText();
-        int floorNumber = Integer.parseInt(floorNumberText.substring(0, floorNumberText.indexOf("\u0020")));
-        return floorNumber != 1;
+        var floorNumber = Integer.parseInt(floorNumberText.substring(0, floorNumberText.indexOf(SPACE_CHAR)));
+        return floorNumber != FIRST_FLOOR;
     }
 
     public boolean checkSquareIsMoreThanMin(String minSquare) {
         String squareNumberText = squareInfo.getText();
-        int squareNumber = Integer.parseInt(squareNumberText.substring(0, squareNumberText.indexOf("\u0020")));
+        var squareNumber = Integer.parseInt(squareNumberText.substring(ZERO, squareNumberText.indexOf(SPACE_CHAR)));
         return (squareNumber >= Integer.parseInt(minSquare));
     }
 
     public boolean checkOfferPriceLessThanMaxPrice(String maxPrice) {
-        String offerPriceText = offerPrice.getText().replaceAll("\\s+", "");
-        int offerPrice = Integer.parseInt(offerPriceText.substring(0, offerPriceText.indexOf("〒")));
-        return offerPrice <= Integer.parseInt(maxPrice);
+        String offerPriceText = offerPrice.getText().replaceAll(SPACE_REGEX, "");
+        var intOfferPrice = Integer.parseInt(offerPriceText.substring(ZERO, offerPriceText.indexOf("〒")));
+        return intOfferPrice <= Integer.parseInt(maxPrice);
     }
 
     public boolean checkAdMainPhotoIsDisplayed() {
