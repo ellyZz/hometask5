@@ -15,4 +15,6 @@ public class Constants {
     public static final String MIN_SQUARE = "50";
     public static final String MAX_PRICE = "300000";
     public static final String PHONE_VALIDATE_REGEX = "^(\\s*)?(\\+)?([- ():=+]?\\d[- ():=+]?){10,14}(\\s*)?$";
+    public static final String LOGIN = "ttestacc12345";
+    public static final String PASSWORD = "Qwerty123!";
 }
