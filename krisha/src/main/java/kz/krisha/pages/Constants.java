@@ -8,7 +8,10 @@ public class Constants {
     public static final int ZERO = 0;
     public static final int ONE = 1;
     public static final int THIRTY = 30;
+    public static final int TWENTY = 20;
+
     public static final String SPACE_REGEX = "\\s+";
+    public static final String START_URL = "https://krisha.kz";
     public static final char SPACE_CHAR = '\u0020';
     public static final String RENT_MEDEO_SIMPLE_FILTERS_TEXT = "Аренда трехкомнатных квартир от хозяев в Медеуском р-не Алматы";
     public static final String RENT_MEDEO_ADDITIONAL_FILTERS_TEXT = "Аренда квартир на длительный срок от хозяев в Медеуском р-не Алматы";

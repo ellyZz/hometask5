@@ -1,14 +1,13 @@
 package kz.krisha.cases;
 
+import kz.krisha.bisness_objects.User;
+import kz.krisha.pages.*;
+import kz.krisha.utils.Screenshoter;
 import kz.krisha.utils.Utils;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
-import kz.krisha.pages.AdPage;
-import kz.krisha.pages.MainPage;
-import kz.krisha.pages.MainPageWithAdditionalFilters;
-import kz.krisha.pages.NewBuildingsPage;
 import org.testng.reporters.jq.Main;
 
 import java.util.concurrent.TimeUnit;
@@ -22,14 +21,23 @@ public class KrishaTests {
     public void setDriver() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
-        driver.get("https://krisha.kz");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.get(START_URL);
+        driver.manage().timeouts().implicitlyWait(TWENTY, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
 
     @AfterMethod
     public void closeDriver() {
         driver.quit();
+    }
+
+    @Test(groups = "UITest")
+    public void isSuccessfulLogin(){
+        MainPage mainPage = new MainPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        mainPage.openLoginPage();
+        loginPage.isLogIn(new User());
+        Screenshoter.takeScreenshot(driver);
     }
 
     @Test(groups = "UITest")

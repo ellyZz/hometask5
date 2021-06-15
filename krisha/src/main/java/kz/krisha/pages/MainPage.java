@@ -62,6 +62,14 @@ public class MainPage extends AbstractPage {
     @FindBy(xpath = "//a[@href='/complex/search/']")
     WebElement newBuildingsLink;
 
+    @FindBy(xpath = "//li[@class='cabinet-link-item']/a[@class='cabinet-link']")
+    WebElement linkToLoginPage;
+
+    public void openLoginPage(){
+        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(linkToLoginPage));
+        linkToLoginPage.click();
+    }
+
     public MainPage selectRentCategory() {
         categoryDropDownList.click();
         rentCategory.click();

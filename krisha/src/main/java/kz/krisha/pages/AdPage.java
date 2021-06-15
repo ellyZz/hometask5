@@ -45,8 +45,8 @@ public class AdPage extends AbstractPage {
 
     public boolean checkSquareIsMoreThanMin(String minSquare) {
         String squareNumberText = squareInfo.getText();
-        var squareNumber = Integer.parseInt(squareNumberText.substring(ZERO, squareNumberText.indexOf(SPACE_CHAR)));
-        return (squareNumber >= Integer.parseInt(minSquare));
+        var squareNumber = Double.parseDouble(squareNumberText.substring(ZERO, squareNumberText.indexOf(SPACE_CHAR)));
+        return (squareNumber >= Double.parseDouble(minSquare));
     }
 
     public boolean checkOfferPriceLessThanMaxPrice(String maxPrice) {
