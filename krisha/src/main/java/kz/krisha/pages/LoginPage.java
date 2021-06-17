@@ -1,6 +1,8 @@
 package kz.krisha.pages;
 
 import kz.krisha.bisness_objects.User;
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static kz.krisha.pages.Constants.THIRTY;
+import static kz.krisha.utils.Constants.THIRTY;
 import static org.testng.Assert.assertEquals;
 
 public class LoginPage extends AbstractPage {
@@ -41,23 +43,27 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    public LoginPage clickLoginButton(){
+    public LoginPage clickLoginButton() {
         new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(loginButton));
         loginButton.click();
         return this;
     }
 
-    public boolean isPostAdButtonIsDisplayedInCabinet(){
-        return postAdButton.isDisplayed();
+    public void isPostAdButtonIsDisplayedInCabinet() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        boolean isDisplayed = !driver.findElements(By.xpath("//a[@class='btn btn-primary a-new-btn']")).isEmpty();
+        softAssertions.assertThat(isDisplayed)
+                .isTrue();
+        softAssertions.assertAll();
     }
 
-    public boolean isLogIn(User user) {
+    public void isLogIn(User user) {
         inputPhoneNumber.clear();
-        fillPhoneNumber(user.getLogin())
+        fillPhoneNumber(user.getPhoneNumber())
                 .clickLoginButton()
                 .fillPassword(user.getPassword())
                 .clickLoginButton();
-        return isPostAdButtonIsDisplayedInCabinet();
-        }
+        isPostAdButtonIsDisplayedInCabinet();
+    }
 
 }

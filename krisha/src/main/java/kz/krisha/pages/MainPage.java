@@ -1,5 +1,6 @@
 package kz.krisha.pages;
 
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static kz.krisha.pages.Constants.THIRTY;
+import static kz.krisha.utils.Constants.MAX_PRICE;
+import static kz.krisha.utils.Constants.THIRTY;
 import static org.testng.Assert.assertEquals;
 
 public class MainPage extends AbstractPage {
@@ -117,10 +119,11 @@ public class MainPage extends AbstractPage {
         return this;
     }
 
-    public MainPage checkValidText(String textFromDoc) {
+    public void checkValidText(String textFromDoc) {
         String textOnPage = pageTitle.getText();
-        assertEquals(textOnPage, textFromDoc);
-        return this;
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(textOnPage).containsIgnoringCase(textFromDoc);
+        softAssertions.assertAll();
     }
 
     public void pressNewBuildingsLink() {
@@ -137,5 +140,19 @@ public class MainPage extends AbstractPage {
     }
     public boolean isSearchButtonDisplayed() {
         return searchButton.isDisplayed();
+    }
+
+    public MainPage fillMainFilters(){
+        MainPage mainPage = new MainPage(driver);
+        mainPage.selectRentCategory()
+                .selectRegion()
+                .inputPrice(MAX_PRICE)
+                .selectHavePhotoCheckBox()
+                .selectOwnerCheckBox()
+                .selectAgency()
+                .selectRoomCount()
+                .selectRoomCount()
+                .pressSearchButton();
+        return this;
     }
 }

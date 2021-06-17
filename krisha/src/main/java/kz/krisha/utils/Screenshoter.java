@@ -11,6 +11,9 @@ import java.io.IOException;
 
 
 public class Screenshoter {
+    private Screenshoter() {
+    }
+
     private static final String SCREENSHOTS_NAME_TPL = "screenshots/scr";
 
     public static void takeScreenshot(WebDriver driver) {

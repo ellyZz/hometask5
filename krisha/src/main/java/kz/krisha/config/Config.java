@@ -1,8 +1,13 @@
-package kz.krisha.bisness_objects;
+package kz.krisha.config;
 
-public class User {
+public class Config {
+    private String startUrl;
     private String phoneNumber;
     private String password;
+
+    public String getStartUrl() {
+        return startUrl;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -10,6 +15,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setStartUrl(String startUrl) {
+        this.startUrl = startUrl;
     }
 
     public void setPhoneNumber(String phoneNumber) {

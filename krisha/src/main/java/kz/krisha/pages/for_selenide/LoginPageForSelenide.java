@@ -33,7 +33,7 @@ public class LoginPageForSelenide {
 
     public boolean isLogIn(User user) {
         $(INPUT_PHONE_NUMBER).clear();
-        fillPhoneNumber(user.getLogin())
+        fillPhoneNumber(user.getPhoneNumber())
                 .clickLoginButton()
                 .fillPassword(user.getPassword())
                 .clickLoginButton();

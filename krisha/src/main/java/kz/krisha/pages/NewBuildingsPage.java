@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static kz.krisha.pages.Constants.*;
+import static kz.krisha.utils.Constants.*;
 
 public class NewBuildingsPage extends AbstractPage {
 

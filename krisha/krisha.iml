@@ -38,7 +38,7 @@
     <orderEntry type="library" name="Maven: org.testng:testng:7.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.78" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery:3.5.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.assertj:assertj-core:3.19.0" level="project" />
+    <orderEntry type="library" name="Maven: org.assertj:assertj-core:3.19.0" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.codeborne:selenide:5.22.0" level="project" />
     <orderEntry type="library" name="Maven: io.github.bonigarcia:webdrivermanager:4.4.3" level="project" />

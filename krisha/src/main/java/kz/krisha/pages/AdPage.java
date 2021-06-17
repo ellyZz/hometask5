@@ -1,5 +1,7 @@
 package kz.krisha.pages;
 
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static kz.krisha.pages.Constants.*;
+import static kz.krisha.utils.Constants.*;
 
 public class AdPage extends AbstractPage {
 
@@ -55,8 +57,12 @@ public class AdPage extends AbstractPage {
         return intOfferPrice <= Integer.parseInt(maxPrice);
     }
 
-    public boolean checkAdMainPhotoIsDisplayed() {
-        return adMainPhoto.isDisplayed();
+    public void checkAdMainPhotoIsDisplayed() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        boolean isDisplayed = !driver.findElements(By.xpath("//div[@class='gallary__main']/img")).isEmpty();
+        softAssertions.assertThat(isDisplayed)
+                .isTrue();
+        softAssertions.assertAll();
     }
 
 }
