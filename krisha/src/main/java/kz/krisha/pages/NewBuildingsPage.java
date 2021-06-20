@@ -5,12 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static kz.krisha.utils.Constants.*;
 
 public class NewBuildingsPage extends AbstractPage {
+    private static final By FULL_PHONE_NUMBER = By.xpath("//div[@class='complex-cards complex-cards--search']/child::div[1]//span[@class='complex-card__full-phone']");
 
     public NewBuildingsPage(WebDriver driver) {
         super(driver);
@@ -18,14 +17,14 @@ public class NewBuildingsPage extends AbstractPage {
     }
 
     @FindBy(xpath = "//div[@class='complex-cards complex-cards--search']/child::div[1]//div[@class='complex-card__phone-block']/div/a")
-    WebElement showPhoneNumber;
+    private WebElement showPhoneNumber;
 
     @FindBy(xpath = "//div[@class='complex-cards complex-cards--search']/child::div[1]//span[@class='complex-card__full-phone']")
-    WebElement fullPhoneNumber;
+    private WebElement fullPhoneNumber;
 
     public boolean isCorrectPhoneNumber() {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(showPhoneNumber));
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='complex-cards complex-cards--search']/child::div[1]//span[@class='complex-card__full-phone']")));
+        waitForWebElementBeClickable(showPhoneNumber);
+        waitForWebElementPresence(FULL_PHONE_NUMBER);
         showPhoneNumber.click();
         String fullPhoneNumberText = fullPhoneNumber.getText();
         return fullPhoneNumberText.matches(PHONE_VALIDATE_REGEX);

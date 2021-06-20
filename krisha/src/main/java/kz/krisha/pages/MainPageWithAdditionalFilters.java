@@ -1,85 +1,78 @@
 package kz.krisha.pages;
 
-import org.assertj.core.api.SoftAssertions;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static kz.krisha.utils.Constants.MIN_SQUARE;
-import static kz.krisha.utils.Constants.THIRTY;
-import static org.testng.Assert.assertEquals;
 
 public class MainPageWithAdditionalFilters extends AbstractPage {
+
+    private static final By MIN_SQUARE_LOCATOR = By.xpath("//input[@id='das[live.square][from]']");
+    private static final By PAGE_TITLE_LOCATOR = By.xpath("//div[@class='page-title']/h1");
 
     public MainPageWithAdditionalFilters(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//button[@class='search-btn-main']")
-    WebElement additionalSearchButton;
-
     @FindBy(xpath = "//div[@class='btn-group']/button[@title=' На любой срок']")
-    WebElement periodDropDownList;
+    private WebElement periodDropDownList;
 
     @FindBy(xpath = "//div[@class='btn-group open']/ul/child::li[4]")
-    WebElement longPeriod;
+    private WebElement longPeriod;
 
     @FindBy(xpath = "//label[@for='das[floor_not_first]-checkbox-0']")
-    WebElement notFirstFloorCheckBox;
+    private WebElement notFirstFloorCheckBox;
 
     @FindBy(xpath = "//input[@id='das[live.square][from]']")
-    WebElement minSquare;
+    private WebElement minSquare;
 
     @FindBy(xpath = "//div[@class='btn-submit-wrapper']/button")
-    WebElement searchButton;
+    private WebElement searchButton;
 
     @FindBy(xpath = "//div[@class='page-title']/h1")
-    WebElement pageTitle;
+    private WebElement pageTitle;
 
     @FindBy(xpath = "//section[@class='a-list a-search-list a-list-with-favs']/section/child::div[3]")
-    WebElement firstAd;
+    private WebElement firstAd;
 
     public MainPageWithAdditionalFilters selectPeriod() {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(periodDropDownList));
+        waitForWebElementBeClickable(periodDropDownList);
         periodDropDownList.click();
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(longPeriod));
+        waitForWebElementBeClickable(longPeriod);
         longPeriod.click();
         return this;
     }
 
     public MainPageWithAdditionalFilters selectNotFirstCheckBox() {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(notFirstFloorCheckBox));
+        waitForWebElementBeClickable(notFirstFloorCheckBox);
         notFirstFloorCheckBox.click();
         return this;
     }
 
     public MainPageWithAdditionalFilters inputMinSquare(String square) {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='das[live.square][from]']")));
+        waitForWebElementPresence(MIN_SQUARE_LOCATOR);
         minSquare.sendKeys(square);
         return this;
     }
 
     public MainPageWithAdditionalFilters clickSearchButton() {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(searchButton));
+        waitForWebElementBeClickable(searchButton);
         searchButton.click();
         return this;
     }
 
-    public void checkTitleTextAfterAdditionalFilters(String textFromDoc) {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='page-title']/h1")));
-        String textOnPage = pageTitle.getText();
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(textOnPage).containsIgnoringCase(textFromDoc);
-        softAssertions.assertAll();
+    public String getTitleTextAfterAdditionalFilters() {
+        waitForWebElementPresence(PAGE_TITLE_LOCATOR);
+        return pageTitle.getText();
     }
 
     public void clickToFirstAd() {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(firstAd));
+        waitForWebElementBeClickable(firstAd);
         firstAd.click();
     }
 

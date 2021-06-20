@@ -1,7 +1,11 @@
 package kz.krisha.cases;
 
-import kz.krisha.bisness_objects.User;
 import kz.krisha.config.Config;
+import kz.krisha.driver.WebDriverCustomizer;
+import kz.krisha.driver.factory.BrowserType;
+import kz.krisha.driver.factory.DriverFactory;
+import kz.krisha.driver.singleton.WebDriverSingleton;
+import kz.krisha.steps.LogIn;
 import kz.krisha.utils.CreateUser;
 import kz.krisha.utils.ReadConfig;
 import kz.krisha.pages.*;
@@ -9,79 +13,74 @@ import kz.krisha.utils.Screenshoter;
 import kz.krisha.utils.Utils;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
 import static kz.krisha.utils.Constants.*;
 
-public class KrishaTests {
-    private WebDriver driver;
-    private final Config config = ReadConfig.getConfig();
-
-    @BeforeMethod
-    public void setDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get(config.getStartUrl());
-        driver.manage().timeouts().implicitlyWait(TWENTY, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-    }
-
-    @AfterMethod
-    public void closeDriver() {
-        driver.quit();
-    }
+public class KrishaTests extends BaseTest{
 
     @Test(groups = "UITest")
     public void isSuccessfulLogin() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = new LoginPage(driver);
+        LogIn logIn = new LogIn(driver);
         mainPage.openLoginPage();
-        loginPage.isLogIn(CreateUser.getUser());
+        loginPage = logIn.logIn(CreateUser.getUser());
+        softAssertions.assertThat(loginPage.isPostAdButtonIsDisplayedInCabinet())
+                .isTrue()
+                .overridingErrorMessage("Login is failed");
         Screenshoter.takeScreenshot(driver);
     }
 
     @Test(groups = "UITest")
     public void verifyPageContentInDefaultState() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPageWithAdditionalFilters mainPageWithFilters = new MainPageWithAdditionalFilters(driver);
         MainPage mainPage = new MainPage(driver);
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(mainPage.isCategoryDropDownListDisplayed())
-                .overridingErrorMessage("CategoryDropDownList is not displayed")
-                .isTrue();
+                .isTrue()
+                .overridingErrorMessage("Category ddlist is not displayed");
         softAssertions.assertThat(mainPage.isRoomCountDropDownListDisplayed())
-                .overridingErrorMessage("RoomCountDropDownList is not displayed")
-                .isTrue();
+                .isTrue()
+                .overridingErrorMessage("Room ddlist is not displayed");
         softAssertions.assertThat(mainPage.isSearchButtonDisplayed())
-                .overridingErrorMessage("Search button is not displayed")
-                .isTrue();
+                .isTrue()
+                .overridingErrorMessage("Search button is not displayed");
         softAssertions.assertAll();
     }
 
     @Test(groups = "UITest")
     public void checkCorrectTextInResultOfSearch() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPage mainPage = new MainPage(driver);
-        mainPage.fillMainFilters()
-                .checkValidText(RENT_MEDEO_SIMPLE_FILTERS_TEXT);
+        mainPage.fillMainFilters();
+        softAssertions.assertThat(mainPage.getTitleTextFromPage())
+                .containsIgnoringCase(RENT_MEDEO_SIMPLE_FILTERS_TEXT)
+                .overridingErrorMessage("Text is not correct");
+
     }
 
     @Test(groups = "UITest")
     public void checkResultOfSpecialFilters() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPageWithAdditionalFilters mainPageWithAdditionalFilters = new MainPageWithAdditionalFilters(driver);
         MainPage mainPage = new MainPage(driver);
         mainPage.fillMainFilters();
-        mainPageWithAdditionalFilters
-                .fillAdditionalFilters()
-                .checkTitleTextAfterAdditionalFilters(RENT_MEDEO_ADDITIONAL_FILTERS_TEXT);
+        mainPageWithAdditionalFilters.fillAdditionalFilters();
+        softAssertions.assertThat(mainPageWithAdditionalFilters.getTitleTextAfterAdditionalFilters())
+                .containsIgnoringCase(RENT_MEDEO_ADDITIONAL_FILTERS_TEXT)
+                .overridingErrorMessage("Text is not correct");
     }
 
     @Test(groups = "UITest")
     public void checkValuesInAd() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPageWithAdditionalFilters mainPageWithFilters = new MainPageWithAdditionalFilters(driver);
         MainPage mainPage = new MainPage(driver);
-        SoftAssertions softAssertions = new SoftAssertions();
         mainPage.fillMainFilters();
         mainPageWithFilters
                 .fillAdditionalFilters()
@@ -89,30 +88,33 @@ public class KrishaTests {
         AdPage adPage = new AdPage(driver);
         Utils utils = new Utils(driver);
         utils.switchTab();
-        adPage
-                .pressHideHint();
+        adPage.pressHideHint();
         softAssertions.assertThat(adPage.checkFloorIsNotFirst())
-                .overridingErrorMessage("Floor is first")
-                .isTrue();
+                .isTrue()
+                .overridingErrorMessage("Floor is first");
         softAssertions.assertThat(adPage.checkSquareIsMoreThanMin(MIN_SQUARE))
-                .overridingErrorMessage("Square is more than min")
-                .isTrue();
+                .isTrue()
+                .overridingErrorMessage("Square is more than min");
         softAssertions.assertThat(adPage.checkOfferPriceLessThanMaxPrice(MAX_PRICE))
-                .overridingErrorMessage("Offer price less than max price")
-                .isTrue();
+                .isTrue()
+                .overridingErrorMessage("Offer price less than max price");
         softAssertions.assertAll();
     }
 
     @Test(groups = "UITest")
     public void checkPhoneNumber() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPage mainPage = new MainPage(driver);
         mainPage.pressNewBuildingsLink();
         NewBuildingsPage newBuildingsPage = new NewBuildingsPage(driver);
-        newBuildingsPage.isCorrectPhoneNumber();
+        softAssertions.assertThat(newBuildingsPage.isCorrectPhoneNumber())
+                .isTrue()
+                .overridingErrorMessage("Phone number is incorrect");
     }
 
     @Test(groups = "UITest")
     public void checkPhotoIsDisplayed() {
+        SoftAssertions softAssertions = new SoftAssertions();
         MainPageWithAdditionalFilters mainPageWithAdditionalFilters = new MainPageWithAdditionalFilters(driver);
         MainPage mainPage = new MainPage(driver);
         mainPage.selectHavePhotoCheckBox();
@@ -123,6 +125,8 @@ public class KrishaTests {
         Utils utils = new Utils(driver);
         utils.switchTab();
         adPage.pressHideHint();
-        adPage.checkAdMainPhotoIsDisplayed();
+        softAssertions.assertThat(adPage.checkAdMainPhotoIsDisplayed())
+                .isTrue()
+                .overridingErrorMessage("Photo is not displayed");
     }
 }

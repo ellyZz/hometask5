@@ -1,18 +1,17 @@
 package kz.krisha.pages;
 
-import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static kz.krisha.utils.Constants.MAX_PRICE;
-import static kz.krisha.utils.Constants.THIRTY;
-import static org.testng.Assert.assertEquals;
 
 public class MainPage extends AbstractPage {
+    private static final By CATEGORY_DROP_DOWN_LIST_LOCATOR = By.className("category-type");
+    private static final By ROOM_COUNT_DROP_DOWN_LIST_LOCATOR = By.cssSelector("select[name='das[live.rooms]']");
+    private static final By SEARCH_BUTTON_LOCATOR = By.xpath("//button[@class='search-btn-main']");
 
     public MainPage(WebDriver driver) {
         super(driver);
@@ -20,55 +19,55 @@ public class MainPage extends AbstractPage {
     }
 
     @FindBy(className = "category-type")
-    WebElement categoryDropDownList;
+    private WebElement categoryDropDownList;
 
     @FindBy(xpath = "//option[@value='rent']")
-    WebElement rentCategory;
+    private WebElement rentCategory;
 
     @FindBy(className = "region-dropdown-label")
-    WebElement regionDropDown;
+    private WebElement regionDropDown;
 
     @FindBy(xpath = "//option[@data-label='Алматы']")
-    WebElement regionAlmaty;
+    private WebElement regionAlmaty;
 
     @FindBy(xpath = "//option[text()='Медеуский р-н']")
-    WebElement medeuskkijRaion;
+    private WebElement medeuskkijRaion;
 
     @FindBy(xpath = "//div[@class='leveled-select is-visible'][3]/a")
-    WebElement selectButton;
+    private WebElement selectButton;
 
     @FindBy(xpath = "//input[@name='das[price][to]']")
-    WebElement priceTo;
+    private WebElement priceTo;
 
     @FindBy(xpath = "//label[@for='das[_sys.hasphoto]-checkbox-0']")
-    WebElement photoCheckbox;
+    private WebElement photoCheckbox;
 
     @FindBy(xpath = "//label[@for='das[who]-checkbox-0']")
-    WebElement fromOwnerCheckBox;
+    private WebElement fromOwnerCheckBox;
 
     @FindBy(xpath = "//label[@for='das[checked]-checkbox-0']")
-    WebElement fromCheckedAgency;
+    private WebElement fromCheckedAgency;
 
     @FindBy(css = "select[name='das[live.rooms]']")
-    WebElement roomCountDropDownList;
+    private WebElement roomCountDropDownList;
 
     @FindBy(xpath = "//option[text()='3 комн.']")
-    WebElement selectThreeRoom;
+    private WebElement selectThreeRoom;
 
     @FindBy(xpath = "//button[@class='search-btn-main']")
-    WebElement searchButton;
+    private WebElement searchButton;
 
     @FindBy(xpath = "//div[@class='page-title']/h1")
-    WebElement pageTitle;
+    private WebElement pageTitle;
 
     @FindBy(xpath = "//a[@href='/complex/search/']")
-    WebElement newBuildingsLink;
+    private WebElement newBuildingsLink;
 
     @FindBy(xpath = "//li[@class='cabinet-link-item']/a[@class='cabinet-link']")
-    WebElement linkToLoginPage;
+    private WebElement linkToLoginPage;
 
-    public void openLoginPage(){
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(linkToLoginPage));
+    public void openLoginPage() {
+        waitForWebElementBeClickable(linkToLoginPage);
         linkToLoginPage.click();
     }
 
@@ -80,7 +79,7 @@ public class MainPage extends AbstractPage {
 
     public MainPage selectRegion() {
         regionDropDown.click();
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(regionAlmaty));
+        waitForWebElementBeClickable(regionAlmaty);
         regionAlmaty.click();
         medeuskkijRaion.click();
         selectButton.click();
@@ -109,7 +108,7 @@ public class MainPage extends AbstractPage {
 
     public MainPage selectRoomCount() {
         roomCountDropDownList.click();
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(selectThreeRoom));
+        waitForWebElementBeClickable(selectThreeRoom);
         selectThreeRoom.click();
         return this;
     }
@@ -119,30 +118,28 @@ public class MainPage extends AbstractPage {
         return this;
     }
 
-    public void checkValidText(String textFromDoc) {
-        String textOnPage = pageTitle.getText();
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(textOnPage).containsIgnoringCase(textFromDoc);
-        softAssertions.assertAll();
+    public String getTitleTextFromPage() {
+        return pageTitle.getText();
     }
 
     public void pressNewBuildingsLink() {
-        new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(newBuildingsLink));
+        waitForWebElementBeClickable(newBuildingsLink);
         newBuildingsLink.click();
     }
 
     public boolean isCategoryDropDownListDisplayed() {
-        return categoryDropDownList.isDisplayed();
+        return isWebElementDisplayed(CATEGORY_DROP_DOWN_LIST_LOCATOR);
     }
 
     public boolean isRoomCountDropDownListDisplayed() {
-        return roomCountDropDownList.isDisplayed();
-    }
-    public boolean isSearchButtonDisplayed() {
-        return searchButton.isDisplayed();
+        return isWebElementDisplayed(ROOM_COUNT_DROP_DOWN_LIST_LOCATOR);
     }
 
-    public MainPage fillMainFilters(){
+    public boolean isSearchButtonDisplayed() {
+        return isWebElementDisplayed(SEARCH_BUTTON_LOCATOR);
+    }
+
+    public MainPage fillMainFilters() {
         MainPage mainPage = new MainPage(driver);
         mainPage.selectRentCategory()
                 .selectRegion()

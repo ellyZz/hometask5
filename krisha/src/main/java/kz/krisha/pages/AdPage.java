@@ -1,6 +1,5 @@
 package kz.krisha.pages;
 
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static kz.krisha.utils.Constants.*;
 
 public class AdPage extends AbstractPage {
+    private static final By AD_MAIN_PHOTO = By.xpath("//div[@class='gallary__main']/img");
 
     public AdPage(WebDriver driver) {
         super(driver);
@@ -19,19 +19,16 @@ public class AdPage extends AbstractPage {
     }
 
     @FindBy(xpath = "//button[@class='kr-btn kr-btn--gray-gradient']")
-    WebElement hideHint;
+    private WebElement hideHint;
 
     @FindBy(xpath = "//div[@data-name='flat.floor']/div[@class='offer__advert-short-info']")
-    WebElement floorInfo;
+    private WebElement floorInfo;
 
     @FindBy(xpath = "//div[@data-name='live.square']/div[@class='offer__advert-short-info']")
-    WebElement squareInfo;
+    private WebElement squareInfo;
 
     @FindBy(xpath = "//div[@class='offer__price']")
-    WebElement offerPrice;
-
-    @FindBy(xpath = "//div[@class='gallary__main']/img")
-    WebElement adMainPhoto;
+    private WebElement offerPrice;
 
     public AdPage pressHideHint() {
         new WebDriverWait(driver, THIRTY).until(ExpectedConditions.elementToBeClickable(hideHint));
@@ -57,12 +54,8 @@ public class AdPage extends AbstractPage {
         return intOfferPrice <= Integer.parseInt(maxPrice);
     }
 
-    public void checkAdMainPhotoIsDisplayed() {
-        SoftAssertions softAssertions = new SoftAssertions();
-        boolean isDisplayed = !driver.findElements(By.xpath("//div[@class='gallary__main']/img")).isEmpty();
-        softAssertions.assertThat(isDisplayed)
-                .isTrue();
-        softAssertions.assertAll();
+    public boolean checkAdMainPhotoIsDisplayed() {
+       return isWebElementDisplayed(AD_MAIN_PHOTO);
     }
 
 }
