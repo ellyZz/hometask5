@@ -1,7 +1,6 @@
 package kz.krisha.driver;
 
 import kz.krisha.config.Config;
-import kz.krisha.driver.factory.BrowserType;
 import kz.krisha.driver.factory.DriverFactory;
 import kz.krisha.utils.ReadConfig;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +17,7 @@ public class WebDriverCustomizer {
     private WebDriverCustomizer() {
     }
 
-    public static WebDriver get(BrowserType type) {
+    public static WebDriver get(String type) {
         if (driver != null) {
             return driver;
         }

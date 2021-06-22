@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="UI Test">
+    <test name="UITest">
+        <parameter name="Browser" value="CHROME"></parameter>
+        <groups>
+            <run>
+                <include name="UITest"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="kz.krisha.cases.KrishaTests"/>
+        </classes>
+    </test>
+</suite>

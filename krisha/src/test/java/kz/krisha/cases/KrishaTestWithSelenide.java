@@ -2,14 +2,13 @@ package kz.krisha.cases;
 
 import kz.krisha.bisness_objects.User;
 import kz.krisha.config.Config;
-import kz.krisha.utils.ReadConfig;
 import kz.krisha.pages.for_selenide.LoginPageForSelenide;
 import kz.krisha.pages.for_selenide.MainPageForSelenide;
-
+import kz.krisha.utils.ReadConfig;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 
 
 public class KrishaTestWithSelenide {

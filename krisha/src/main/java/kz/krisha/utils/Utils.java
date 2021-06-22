@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 
-import static kz.krisha.utils.Constants.*;
+import static kz.krisha.utils.Constants.ONE;
 
 
 public class Utils extends AbstractPage {

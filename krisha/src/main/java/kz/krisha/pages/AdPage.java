@@ -55,7 +55,7 @@ public class AdPage extends AbstractPage {
     }
 
     public boolean checkAdMainPhotoIsDisplayed() {
-       return isWebElementDisplayed(AD_MAIN_PHOTO);
+        return isWebElementDisplayed(AD_MAIN_PHOTO);
     }
 
 }

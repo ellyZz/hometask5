@@ -16,7 +16,7 @@ public abstract class AbstractPage {
         this.driver = driver;
     }
 
-    public boolean isWebElementDisplayed(By elementLocator){
+    public boolean isWebElementDisplayed(By elementLocator) {
         return !driver.findElements(elementLocator).isEmpty();
     }
 
@@ -27,6 +27,7 @@ public abstract class AbstractPage {
     public void waitForWebElementPresence(By elementLocator) {
         new WebDriverWait(driver, THIRTY).until(ExpectedConditions.presenceOfElementLocated(elementLocator));
     }
+
     public void waitForWebElementVisible(WebElement element) {
         new WebDriverWait(driver, THIRTY).until(ExpectedConditions.visibilityOf(element));
     }

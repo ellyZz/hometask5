@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static kz.krisha.utils.Constants.*;
+import static kz.krisha.utils.Constants.PHONE_VALIDATE_REGEX;
 
 public class NewBuildingsPage extends AbstractPage {
     private static final By FULL_PHONE_NUMBER = By.xpath("//div[@class='complex-cards complex-cards--search']/child::div[1]//span[@class='complex-card__full-phone']");

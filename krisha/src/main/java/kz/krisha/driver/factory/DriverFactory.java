@@ -8,15 +8,15 @@ public class DriverFactory {
 
     private static WebDriver driver;
 
-    public static WebDriver init(BrowserType type) {
+    public static WebDriver init(String type) {
         switch (type) {
-            case CHROME -> {
+            case "CHROME" -> {
                 driver = new ChromeDriverProvider().createWebDriver();
             }
-            case FIREFOX -> {
+            case "FIREFOX" -> {
                 driver = new FireFoxDriverProvider().createWebDriver();
             }
-            case EDGE -> {
+            case "EDGE" -> {
                 driver = new EdgeDriverProvider().createWebDriver();
             }
             default -> throw new IllegalArgumentException("Incorrect type" + type);

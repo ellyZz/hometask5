@@ -1,6 +1,6 @@
 package kz.krisha.config;
 
-public class Config {
+public final class Config {
     private String startUrl;
     private String phoneNumber;
     private String password;

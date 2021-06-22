@@ -27,7 +27,8 @@ public class ReadConfig {
             throw new ReadFromFileException(e);
         }
     }
-    public static Config getConfig(){
+
+    public static Config getConfig() {
         Config config = new Config();
         config.setStartUrl(ReadConfig.getProperty("startUrl"));
         config.setPhoneNumber(ReadConfig.getProperty("phoneNumber"));

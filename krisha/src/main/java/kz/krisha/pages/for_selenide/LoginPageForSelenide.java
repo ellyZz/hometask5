@@ -3,8 +3,9 @@ package kz.krisha.pages.for_selenide;
 import kz.krisha.bisness_objects.User;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.enabled;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPageForSelenide {
     private static final By INPUT_PHONE_NUMBER = By.xpath("//input[@id='login']");
