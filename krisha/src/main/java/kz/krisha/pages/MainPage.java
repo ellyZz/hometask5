@@ -1,7 +1,6 @@
 package kz.krisha.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,8 +12,7 @@ public class MainPage extends AbstractPage {
     private static final By ROOM_COUNT_DROP_DOWN_LIST_LOCATOR = By.cssSelector("select[name='das[live.rooms]']");
     private static final By SEARCH_BUTTON_LOCATOR = By.xpath("//button[@class='search-btn-main']");
 
-    public MainPage(WebDriver driver) {
-        super(driver);
+    public MainPage() {
         PageFactory.initElements(driver, this);
     }
 
@@ -140,7 +138,7 @@ public class MainPage extends AbstractPage {
     }
 
     public MainPage fillMainFilters() {
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage();
         mainPage.selectRentCategory()
                 .selectRegion()
                 .inputPrice(MAX_PRICE)

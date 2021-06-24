@@ -1,5 +1,6 @@
 package kz.krisha.pages;
 
+import kz.krisha.driver.WebDriverCustomizer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,8 +13,9 @@ public abstract class AbstractPage {
 
     protected WebDriver driver;
 
-    protected AbstractPage(WebDriver driver) {
-        this.driver = driver;
+
+    protected AbstractPage() {
+        this.driver = WebDriverCustomizer.get();
     }
 
     public boolean isWebElementDisplayed(By elementLocator) {

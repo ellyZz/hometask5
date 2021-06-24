@@ -33,6 +33,7 @@ public class ReadConfig {
         config.setStartUrl(ReadConfig.getProperty("startUrl"));
         config.setPhoneNumber(ReadConfig.getProperty("phoneNumber"));
         config.setPassword(ReadConfig.getProperty("password"));
+        config.setBrowser(ReadConfig.getProperty("browser"));
         return config;
     }
 }

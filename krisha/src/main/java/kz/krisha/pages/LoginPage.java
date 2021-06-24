@@ -1,7 +1,6 @@
 package kz.krisha.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -9,8 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage extends AbstractPage {
     private static final By POST_ADD_BUTTON = By.xpath("//a[@class='btn btn-primary a-new-btn']");
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage() {
         PageFactory.initElements(driver, this);
     }
 

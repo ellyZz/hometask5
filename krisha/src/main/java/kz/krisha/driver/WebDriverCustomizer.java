@@ -14,14 +14,15 @@ public class WebDriverCustomizer {
     private static WebDriver driver;
     private static final Config config = ReadConfig.getConfig();
 
+
     private WebDriverCustomizer() {
     }
 
-    public static WebDriver get(String type) {
+    public static WebDriver get() {
         if (driver != null) {
             return driver;
         }
-        driver = new CustomDriverDecorator(DriverFactory.init(type));
+        driver = new CustomDriverDecorator(DriverFactory.init(config.getBrowser()));
         driver.getCurrentUrl();
         driver.get(config.getStartUrl());
         driver.manage().timeouts().implicitlyWait(TWENTY, TimeUnit.SECONDS);

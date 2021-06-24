@@ -3,17 +3,13 @@ package kz.krisha.steps;
 import kz.krisha.pages.AbstractPage;
 import kz.krisha.pages.MainPage;
 import org.assertj.core.api.SoftAssertions;
-import org.openqa.selenium.WebDriver;
 
 public class MainPageSteps extends AbstractPage {
 
-    public MainPageSteps(WebDriver driver) {
-        super(driver);
-    }
 
     public void isDefaultContentDisplayed() {
         SoftAssertions softAssertions = new SoftAssertions();
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage();
         softAssertions.assertThat(mainPage.isCategoryDropDownListDisplayed())
                 .isTrue()
                 .overridingErrorMessage("Category ddlist is not displayed");

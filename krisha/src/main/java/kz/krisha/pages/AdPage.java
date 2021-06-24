@@ -1,7 +1,6 @@
 package kz.krisha.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,8 +12,7 @@ import static kz.krisha.utils.Constants.*;
 public class AdPage extends AbstractPage {
     private static final By AD_MAIN_PHOTO = By.xpath("//div[@class='gallary__main']/img");
 
-    public AdPage(WebDriver driver) {
-        super(driver);
+    public AdPage() {
         PageFactory.initElements(driver, this);
     }
 

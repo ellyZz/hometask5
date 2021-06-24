@@ -1,7 +1,6 @@
 package kz.krisha.utils;
 
 import kz.krisha.pages.AbstractPage;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
@@ -10,8 +9,7 @@ import static kz.krisha.utils.Constants.ONE;
 
 
 public class Utils extends AbstractPage {
-    public Utils(WebDriver driver) {
-        super(driver);
+    public Utils() {
         PageFactory.initElements(driver, this);
     }
 

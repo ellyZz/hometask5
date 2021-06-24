@@ -4,6 +4,15 @@ public final class Config {
     private String startUrl;
     private String phoneNumber;
     private String password;
+    private String browser;
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
 
     public String getStartUrl() {
         return startUrl;

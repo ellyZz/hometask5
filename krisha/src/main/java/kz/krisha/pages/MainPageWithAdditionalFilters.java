@@ -2,7 +2,6 @@ package kz.krisha.pages;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -14,8 +13,7 @@ public class MainPageWithAdditionalFilters extends AbstractPage {
     private static final By MIN_SQUARE_LOCATOR = By.xpath("//input[@id='das[live.square][from]']");
     private static final By PAGE_TITLE_LOCATOR = By.xpath("//div[@class='page-title']/h1");
 
-    public MainPageWithAdditionalFilters(WebDriver driver) {
-        super(driver);
+    public MainPageWithAdditionalFilters() {
         PageFactory.initElements(driver, this);
     }
 
@@ -77,7 +75,7 @@ public class MainPageWithAdditionalFilters extends AbstractPage {
     }
 
     public MainPageWithAdditionalFilters fillAdditionalFilters() {
-        MainPageWithAdditionalFilters mainPageWithAdditionalFilters = new MainPageWithAdditionalFilters(driver);
+        MainPageWithAdditionalFilters mainPageWithAdditionalFilters = new MainPageWithAdditionalFilters();
         mainPageWithAdditionalFilters
                 .selectPeriod()
                 .selectNotFirstCheckBox()
