@@ -6,6 +6,8 @@ import org.openqa.selenium.*;
 import java.util.List;
 import java.util.Set;
 
+import static kz.krisha.utils.Utils.highlightElement;
+
 public class CustomDriverDecorator implements WebDriver, TakesScreenshot, JavascriptExecutor {
     protected WebDriver driver;
 
@@ -31,12 +33,14 @@ public class CustomDriverDecorator implements WebDriver, TakesScreenshot, Javasc
 
     @Override
     public List<WebElement> findElements(By by) {
+        Logger.info(by.toString());
         return driver.findElements(by);
     }
 
     @Override
     public WebElement findElement(By by) {
         Logger.info(String.format("Finding element: %s, current URL: '%s'", by.toString(), driver.getCurrentUrl()));
+        highlightElement(driver, by);
         return driver.findElement(by);
     }
 
@@ -69,19 +73,18 @@ public class CustomDriverDecorator implements WebDriver, TakesScreenshot, Javasc
 
     @Override
     public TargetLocator switchTo() {
-        Logger.info("Swich to decorator");
+        Logger.info("Switch to ");
         return driver.switchTo();
     }
 
     @Override
     public Navigation navigate() {
-        Logger.info("Navigate to decorator");
         return driver.navigate();
     }
 
     @Override
     public Options manage() {
-        Logger.info("Manage decorator");
+        Logger.info("Manage web driver");
         return driver.manage();
     }
 

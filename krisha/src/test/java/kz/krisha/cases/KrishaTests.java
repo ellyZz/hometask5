@@ -1,19 +1,20 @@
 package kz.krisha.cases;
 
-import kz.krisha.driver.WebDriverCustomizer;
 import kz.krisha.pages.*;
 import kz.krisha.steps.AdPageSteps;
 import kz.krisha.steps.LogIn;
 import kz.krisha.steps.MainPageSteps;
 import kz.krisha.utils.CreateUser;
-import kz.krisha.utils.Screenshoter;
+import kz.krisha.utils.TestsListener;
 import kz.krisha.utils.Utils;
 import org.assertj.core.api.SoftAssertions;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static kz.krisha.utils.Constants.RENT_MEDEO_ADDITIONAL_FILTERS_TEXT;
 import static kz.krisha.utils.Constants.RENT_MEDEO_SIMPLE_FILTERS_TEXT;
 
+@Listeners(TestsListener.class)
 public class KrishaTests extends BaseTest {
 
     @Test(groups = "UITest")
@@ -26,7 +27,7 @@ public class KrishaTests extends BaseTest {
         softAssertions.assertThat(loginPage.isPostAdButtonIsDisplayedInCabinet())
                 .isTrue()
                 .overridingErrorMessage("Login is failed");
-        Screenshoter.takeScreenshot(WebDriverCustomizer.get());
+        softAssertions.assertAll();
     }
 
     @Test(groups = "UITest")
@@ -43,6 +44,7 @@ public class KrishaTests extends BaseTest {
         softAssertions.assertThat(mainPage.getTitleTextFromPage())
                 .containsIgnoringCase(RENT_MEDEO_SIMPLE_FILTERS_TEXT)
                 .overridingErrorMessage("Text is not correct");
+        softAssertions.assertAll();
 
     }
 
@@ -56,6 +58,7 @@ public class KrishaTests extends BaseTest {
         softAssertions.assertThat(mainPageWithAdditionalFilters.getTitleTextAfterAdditionalFilters())
                 .containsIgnoringCase(RENT_MEDEO_ADDITIONAL_FILTERS_TEXT)
                 .overridingErrorMessage("Text is not correct");
+        softAssertions.assertAll();
     }
 
     @Test(groups = "UITest")
@@ -83,6 +86,7 @@ public class KrishaTests extends BaseTest {
         softAssertions.assertThat(newBuildingsPage.isCorrectPhoneNumber())
                 .isTrue()
                 .overridingErrorMessage("Phone number is incorrect");
+        softAssertions.assertAll();
     }
 
     @Test(groups = "UITest")
@@ -101,5 +105,6 @@ public class KrishaTests extends BaseTest {
         softAssertions.assertThat(adPage.checkAdMainPhotoIsDisplayed())
                 .isTrue()
                 .overridingErrorMessage("Photo is not displayed");
+        softAssertions.assertAll();
     }
 }

@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static kz.krisha.utils.Constants.*;
 
 public class AdPage extends AbstractPage {
-    private static final By AD_MAIN_PHOTO = By.xpath("//div[@class='gallary__main']/img");
+    private static final By AD_MAIN_PHOTO = By.xpath("//div[@class='gallery__main']/img");
 
     public AdPage() {
         PageFactory.initElements(driver, this);
